@@ -9,41 +9,32 @@ public class GUI {
     private JScrollPane  table_panel;
     private JTable table;
 
-    public void setTable(JTable table) {
-        this.table = table;
-    }
+    private JButton done = new JButton("Done");
+    private JButton updateButton = new JButton("Update");
+    
+    private DefaultTableModel tableModel;
 
-    public JTable getTable() {
-        return table;
-    }
+    
 
     private JButton add;
     private JButton update;
     private JButton delete;
-    private JMenu write_csv;
-    private JMenu read_csv;
+    private JMenuItem write_csv;
+    private JMenuItem read_csv;
+    private JMenuBar menu;
+
+
+
     private JTextField tf_name = new JTextField();
-    public JTextField getTf_name() {
-        return tf_name;
-    }
-
     private JTextField tf_price = new JTextField();
-    public JTextField getTf_price() {
-        return tf_price;
-    }
-
     private JTextField tf_cat = new JTextField();
-    public JTextField getTf_cat() {
-        return tf_cat;
-    }
-
     private JTextField tf_date = new JTextField();
-    public JTextField getTf_date() {
-        return tf_date;
-    }
+    private JMenuItem summary;
+    
 
-    private JButton done = new JButton("Done");
-    private DefaultTableModel tableModel;
+    
+
+   
 
     public DefaultTableModel getTableModel() {
         return tableModel;
@@ -85,17 +76,20 @@ public class GUI {
 
         frame.add(tool_panel,BorderLayout.SOUTH);
         frame.add(table_panel,BorderLayout.CENTER);
-        frame.setJMenuBar(createJMenuBar());
+        menu = createJMenuBar();
+        frame.setJMenuBar(menu);
         frame.pack();
         frame.setVisible(true);
     }
 
     public JMenuBar createJMenuBar(){
         JMenuBar menuBar = new JMenuBar();
-        write_csv = new JMenu("write to csv file");
-        read_csv = new JMenu("read csv file");
+        write_csv = new JMenuItem("write to csv file");
+        read_csv = new JMenuItem("read csv file");
+        summary = new JMenuItem("summary");
         menuBar.add(write_csv);
         menuBar.add(read_csv);
+        menuBar.add(summary);
         return menuBar;
     }
 
@@ -106,7 +100,7 @@ public class GUI {
         JLabel label_date = new JLabel("Date");
 
         done.setPreferredSize(new Dimension(200,50));
-
+        updateButton.setPreferredSize(new Dimension(200,50));
 
         tf_name.setPreferredSize(new Dimension(200,50));
         tf_price.setPreferredSize(new Dimension(200,50));
@@ -119,7 +113,7 @@ public class GUI {
 
         JFrame new_window = new JFrame(title);
         new_window.setLayout(new FlowLayout());
-        new_window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        new_window.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         new_window.setPreferredSize(new Dimension(400,600));
         new_window.add(label_name);
         new_window.add(tf_name);
@@ -132,8 +126,11 @@ public class GUI {
 
         new_window.add(label_date);
         new_window.add(tf_date);
-
-        new_window.add(done);
+        if (type.equals("add")){
+            new_window.add(done);
+        }else{
+            new_window.add(updateButton);
+        }
 
         new_window.pack();
         new_window.setVisible(true);
@@ -173,7 +170,59 @@ public class GUI {
         this.update = update;
     }
 
+    public void setTable(JTable table) {
+        this.table = table;
+    }
+
+    public JTable getTable() {
+        return table;
+    }
+
+    public JTextField getTf_name() {
+        return tf_name;
+    }
+
+    public JTextField getTf_price() {
+        return tf_price;
+    }
    
+    public JTextField getTf_cat() {
+        return tf_cat;
+    }
+
+    public JTextField getTf_date() {
+        return tf_date;
+    }
+
+    public JButton getUpdateButton() {
+        return updateButton;
+    }
+
+    public JMenuItem getWrite_csv() {
+        return write_csv;
+    }
+    
+    public JMenuItem getRead_csv() {
+        return read_csv;
+    }
+
+    public JMenuBar getMenu() {
+        return menu;
+    }
+
+    public JMenuItem getSummary() {
+        return summary;
+    }
+
+    public JFrame summaryWindow(){
+        JFrame new_window = new JFrame("summary");
+        new_window.setLayout(new BorderLayout());
+        new_window.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        new_window.setPreferredSize(new Dimension(600,600));
+        new_window.setVisible(true);
+        new_window.pack();
+        return new_window;
+    }
 
 
 

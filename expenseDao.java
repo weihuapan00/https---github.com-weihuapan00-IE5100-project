@@ -11,8 +11,11 @@ public class expenseDao{
     public expenseDao(String filepath){
         // SimpleDateFormat formatter = new SimpleDateFormat("mm-dd-yyyy",Locale.US);
         setFilepath(filepath);
-        LinkedList<String> str_list = read_csv();
-        row = new Object[str_list.size()+100][4];
+        read(read_csv());
+    }
+
+    public void read(LinkedList<String> str_list) {
+        row = new Object[str_list.size()][4];
         for(int i =0 ; i<str_list.size(); i++){
             String str = str_list.get(i);
             LinkedList<String> list = new LinkedList<>(Arrays.asList(str.split(",")));
@@ -98,8 +101,35 @@ public class expenseDao{
         return str_list;
     }
 
-    public boolean write_csv(){
-        return true;
+    public void write_csv(){
+        fileOpener file = new fileOpener("output.csv");
+        file.writeFile(getRows(),"output.csv");
+    }
+
+    public LinkedList<Double> summarize(){
+        LinkedList<Double> list = new LinkedList<>();
+        double sum = 0;
+        list.add(Double.valueOf(0));
+        list.add(Double.valueOf(0));
+        list.add(Double.valueOf(0));
+        list.add(Double.valueOf(0));
+        Object[][] data = getRows();
+        for (int i=0; i<data.length; i++){
+                double x =  (double) data[i][1];
+                String cat = (String) data[i][2];
+                if(cat.equals("Food")){
+                    list.set(0,(double)list.get(0)+x);
+                }else if(cat.equals("Electronics")){
+                    list.set(1,(double)list.get(1)+x);
+                }else if(cat.equals("Transportation")){
+                    list.set(2,(double)list.get(2)+x);
+                }else{
+                    list.set(3,(double)list.get(3)+x);
+                }
+                sum += x;
+        }
+        list.add(Double.valueOf(sum));
+        return list;
     }
 
     public static void main(String[] args) { 

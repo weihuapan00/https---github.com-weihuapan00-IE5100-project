@@ -30,23 +30,31 @@ public class fileOpener {
     }
 
     // write file to filename
-    public void writeFile(String filename){
+    public void writeFile(Object[][] arr,String filename){
         //  set the filename that need to  write
         setFilename(filename);
         try {
             // init filewriter obj
             FileWriter myWriter = new FileWriter(filename);
             // for each line of text
-            for (String str : str_list){
-                // split the text with comma, max 4 columns
-                String[] list = str.split(",",4);
-                String toWrite = ""; // empty str
-                for(int i = 0; i<2; i++){ // get the first two str with comma
-                  toWrite += list[i] + ",";
-                }
-                toWrite += list[2] + "\n";// and last element and end of line char
-                myWriter.write(toWrite);// write one line of str to file
+            for (int i=0; i<arr.length ; i++){
+              String toWrite = "";
+              for (int j = 0; j<arr[i].length-1; j++){
+                toWrite += arr[i][j].toString() +",";
+              }
+              toWrite += arr[i][3] + "\n";
+              myWriter.write(toWrite);// write one line of str to file
             }
+            // for (String str : arr.toString()){
+            //     // split the text with comma, max 4 columns
+            //     String[] list = str.split(",",4);
+            //     String toWrite = ""; // empty str
+            //     for(int i = 0; i<2; i++){ // get the first two str with comma
+            //       toWrite += list[i] + ",";
+            //     }
+            //     toWrite += list[2] + "\n";// and last element and end of line char
+            //     myWriter.write(toWrite);// write one line of str to file
+            // }
             myWriter.close();// close the filewriter
             System.out.println("Successfully wrote to the file.");
           } catch (IOException e) {
