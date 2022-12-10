@@ -1,12 +1,11 @@
 import java.util.Arrays;
 import java.util.LinkedList;
-import javax.swing.table.DefaultTableModel;
 
-public class expenseDao extends DefaultTableModel {
+public class expenseDao{
     private String filepath;
     
     private String[] col = new String[] {"item name" , "price" , "category" ,"date" };
-    private Class[] colClass = new Class[] {String.class,Double.class,String.class,String.class};
+    // private Class[] colClass = new Class[] {String.class,Double.class,String.class,String.class};
     private Object[][] row;
     
     public expenseDao(String filepath){
@@ -38,9 +37,6 @@ public class expenseDao extends DefaultTableModel {
         return col[index];
     }
 
-    public Class getColumnClass(int index){
-        return colClass[index];
-    }
 
     public String getFilepath() {
         return filepath;
@@ -54,18 +50,18 @@ public class expenseDao extends DefaultTableModel {
         return row;
     }
 
-    // public void  addRow(Object[] arr) {
-    //     Object[][] new_arr = new Object[row.length+1][4];
-    //     for (int i=0; i< row.length; i++){
-    //         for(int j = 0 ; j < row[i].length; j++){
-    //             new_arr[i][j] = row[i][j];
-    //         }
-    //     }
-    //     new_arr[row.length] = arr;
-    //     setRow(new_arr);
-        
-    // }
-    public void setRow(Object[][] row) {
+    public void  addRow(Object[] arr) {
+        Object[][] new_arr = new Object[row.length+1][4];
+        for (int i=0; i< row.length; i++){
+            for(int j = 0 ; j < row[i].length; j++){
+                new_arr[i][j] = row[i][j];
+            }
+        }
+        new_arr[row.length] = arr;
+        setRows(new_arr);
+    }
+
+    public void setRows(Object[][] row) {
         this.row = row;
     }
 
@@ -81,8 +77,7 @@ public class expenseDao extends DefaultTableModel {
                 k++;
             }
         }
-        setRow(new_arr);
-        fireTableRowsDeleted(index, index);
+        setRows(new_arr);
     }
 
     public String[] getCol() {
@@ -105,32 +100,6 @@ public class expenseDao extends DefaultTableModel {
 
     public boolean write_csv(){
         return true;
-    }
-
-    @Override
-    public int getRowCount() {
-        if (getRows() == null){
-            return 100;
-        }
-        return row.length;
-    }
-
-    @Override
-    public int getColumnCount() {
-        return 4;
-    }
-
-    
-
-    @Override
-    public Object getValueAt(int rowIndex, int columnIndex) {
-        return row[rowIndex][columnIndex];
-    }
-
-    @Override
-    public void setValueAt(Object obj, int r, int c) {
-        row[r][c] = obj;
-        fireTableCellUpdated(r, c);
     }
 
     public static void main(String[] args) { 

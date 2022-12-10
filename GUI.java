@@ -1,5 +1,6 @@
 import java.awt.*;
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 
 public class GUI {
 
@@ -42,6 +43,11 @@ public class GUI {
     }
 
     private JButton done = new JButton("Done");
+    private DefaultTableModel tableModel;
+
+    public DefaultTableModel getTableModel() {
+        return tableModel;
+    }
 
     public JButton getDone() {
         return done;
@@ -69,7 +75,9 @@ public class GUI {
         tool_panel.add(update);
         tool_panel.add(delete);
 
-        table = new JTable(new expenseDao("test.csv"));
+        expenseDao m = new expenseDao("test.csv");
+        tableModel = new DefaultTableModel(m.getRows(),m.getCol());
+        table = new JTable(tableModel);
         table_panel = new JScrollPane(table,
         ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS,
         ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
