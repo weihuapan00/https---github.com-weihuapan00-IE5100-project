@@ -1,6 +1,7 @@
 import java.util.Arrays;
 import java.util.LinkedList;
 
+// as MVC model class use fileopenner read and write file and do some operation for the data
 public class expenseDao{
     private String filepath;
     
@@ -8,12 +9,14 @@ public class expenseDao{
     // private Class[] colClass = new Class[] {String.class,Double.class,String.class,String.class};
     private Object[][] row;
     
+
+    //constructor read the data from test.csv
     public expenseDao(String filepath){
-        // SimpleDateFormat formatter = new SimpleDateFormat("mm-dd-yyyy",Locale.US);
         setFilepath(filepath);
         read(read_csv());
     }
 
+    // parse the linkedlist to Object[][] for the use of JTable
     public void read(LinkedList<String> str_list) {
         row = new Object[str_list.size()][4];
         for(int i =0 ; i<str_list.size(); i++){
@@ -36,23 +39,28 @@ public class expenseDao{
         }
     }
     
+    //getter for colname[index]
     public String getColumnName(int index){
         return col[index];
     }
 
 
+    //getter for file path
     public String getFilepath() {
         return filepath;
     }
 
+    //setter for file path
     public void setFilepath(String filepath) {
         this.filepath = filepath;
     }
 
+    //getter for rows
     public Object[][] getRows() {
         return row;
     }
 
+    // add a row to model
     public void  addRow(Object[] arr) {
         Object[][] new_arr = new Object[row.length+1][4];
         for (int i=0; i< row.length; i++){
@@ -64,14 +72,17 @@ public class expenseDao{
         setRows(new_arr);
     }
 
+    //set the rows in model
     public void setRows(Object[][] row) {
         this.row = row;
     }
 
+    // update a row 
     public void updateRow(int index,Object[] arr){
         row[index] = arr;
     }
 
+    // remove a row 
     public void removeRow(int index){
         Object[][] new_arr = new Object[row.length-1][4];
         for(int i=0, k=0;i<row.length;i++){
@@ -83,17 +94,19 @@ public class expenseDao{
         setRows(new_arr);
     }
 
+    //getter col[]
     public String[] getCol() {
         return col;
     }
 
 
+    //setter col
     public void setCol(String[] col) {
         this.col = col;
     }
 
 
-
+    // read csv file parse each line as a String and store in LinkedList 
     public LinkedList<String> read_csv(){
         fileOpener file = new fileOpener(filepath);
         file.readFile();
@@ -101,19 +114,28 @@ public class expenseDao{
         return str_list;
     }
 
+    // write the data to output.csv
     public void write_csv(){
         fileOpener file = new fileOpener("output.csv");
         file.writeFile(getRows(),"output.csv");
     }
 
+    // summary the data and store them in LinkedList
     public LinkedList<Double> summarize(){
+        //init list
         LinkedList<Double> list = new LinkedList<>();
         double sum = 0;
+
+        //init value
         list.add(Double.valueOf(0));
         list.add(Double.valueOf(0));
         list.add(Double.valueOf(0));
         list.add(Double.valueOf(0));
+
+        //get the data from model
         Object[][] data = getRows();
+
+        //iterate the data and summary them
         for (int i=0; i<data.length; i++){
                 double x =  (double) data[i][1];
                 String cat = (String) data[i][2];
@@ -128,10 +150,13 @@ public class expenseDao{
                 }
                 sum += x;
         }
+
+        // add all expense
         list.add(Double.valueOf(sum));
         return list;
     }
 
+    //test the model here don't use this one as app
     public static void main(String[] args) { 
         expenseDao model = new expenseDao("test.csv");
         Object[][] row = model.getRows();

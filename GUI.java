@@ -4,6 +4,7 @@ import javax.swing.table.DefaultTableModel;
 
 public class GUI {
 
+    //init all Component here
     private JFrame frame;
     private JPanel tool_panel;
     private JScrollPane  table_panel;
@@ -11,10 +12,7 @@ public class GUI {
 
     private JButton done = new JButton("Done");
     private JButton updateButton = new JButton("Update");
-    
     private DefaultTableModel tableModel;
-
-    
 
     private JButton add;
     private JButton update;
@@ -32,26 +30,9 @@ public class GUI {
     private JMenuItem summary;
     
 
+
     
-
-   
-
-    public DefaultTableModel getTableModel() {
-        return tableModel;
-    }
-
-    public JButton getDone() {
-        return done;
-    }
-
-    public JButton getDelete() {
-        return delete;
-    }
-
-    public void setDelete(JButton delete) {
-        this.delete = delete;
-    }
-
+    //constructor
     public GUI(){
         frame = new JFrame("Expense Tracker");
         frame.setLayout(new BorderLayout());
@@ -82,6 +63,7 @@ public class GUI {
         frame.setVisible(true);
     }
 
+    // method to create JMenuBar and add JMenuItem to it
     public JMenuBar createJMenuBar(){
         JMenuBar menuBar = new JMenuBar();
         write_csv = new JMenuItem("write to csv file");
@@ -93,15 +75,16 @@ public class GUI {
         return menuBar;
     }
 
+    // new window method
     public JFrame newWindow(String type,String title){
         JLabel label_name = new JLabel("Item name");
         JLabel label_price = new JLabel("Price");
         JLabel label_cat = new JLabel("Category");
         JLabel label_date = new JLabel("Date");
 
+        //set the size of the component
         done.setPreferredSize(new Dimension(200,50));
         updateButton.setPreferredSize(new Dimension(200,50));
-
         tf_name.setPreferredSize(new Dimension(200,50));
         tf_price.setPreferredSize(new Dimension(200,50));
         tf_cat.setPreferredSize(new Dimension(200,50));
@@ -115,17 +98,18 @@ public class GUI {
         new_window.setLayout(new FlowLayout());
         new_window.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         new_window.setPreferredSize(new Dimension(400,600));
+
+        //add components
         new_window.add(label_name);
         new_window.add(tf_name);
-
         new_window.add(label_price);
         new_window.add(tf_price);
-
         new_window.add(label_cat);
         new_window.add(tf_cat);
-
         new_window.add(label_date);
         new_window.add(tf_date);
+
+        //add different button to the end ie. add for addRow update for updateRow
         if (type.equals("add")){
             new_window.add(done);
         }else{
@@ -137,83 +121,116 @@ public class GUI {
         return new_window;
 
     }
+
+    //getter for main frame
     public JFrame getFrame() {
         return frame;
     }
 
+    //setter for frame
     public void setFrame(JFrame frame) {
         this.frame = frame;
     }
 
+    //getter for JScrollPane
     public JScrollPane getPanel() {
         return table_panel;
     }
 
+
+    //setter for JScrollPane
     public void setPanel(JScrollPane table_panel) {
         this.table_panel = table_panel;
     }
 
 
+    //getter for add button
     public JButton getAdd() {
         return add;
     }
 
+    //setter for add button
     public void setAdd(JButton add) {
         this.add = add;
     }
 
+    //getter for update btn
     public JButton getUpdate() {
         return update;
     }
 
+    //setter for update btn
     public void setUpdate(JButton update) {
         this.update = update;
     }
 
+    //setter for table 
     public void setTable(JTable table) {
         this.table = table;
     }
 
+    //getter for table
     public JTable getTable() {
         return table;
     }
 
+    //getter for tf_name
     public JTextField getTf_name() {
         return tf_name;
     }
 
+    //getter for tf_price
     public JTextField getTf_price() {
         return tf_price;
     }
-   
+
+    //getter for tf_cat
     public JTextField getTf_cat() {
         return tf_cat;
     }
 
+    //getter for tf_date
     public JTextField getTf_date() {
         return tf_date;
     }
 
+    //getter for update btn
     public JButton getUpdateButton() {
         return updateButton;
     }
 
+    //getter for JMenuItem write_csv
     public JMenuItem getWrite_csv() {
         return write_csv;
     }
     
+    //getter for JMenuItem read_csv
     public JMenuItem getRead_csv() {
         return read_csv;
     }
 
-    public JMenuBar getMenu() {
-        return menu;
-    }
 
+    //getter for JMenuItem summary
     public JMenuItem getSummary() {
         return summary;
     }
 
+    //getter for tableModel
+    public DefaultTableModel getTableModel() {
+        return tableModel;
+    }
+
+    //getter for done btn
+    public JButton getDone() {
+        return done;
+    }
+
+    // getter for delete btn
+    public JButton getDelete() {
+        return delete;
+    }
+
+    //init a summary window
     public JFrame summaryWindow(){
         JFrame new_window = new JFrame("summary");
         new_window.setLayout(new BorderLayout());
