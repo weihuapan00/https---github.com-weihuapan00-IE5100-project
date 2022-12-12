@@ -1,0 +1,5 @@
+run the main method in app.java
+it will read the test.csv file and display the expense
+tap the add button add a row
+select a column to update and delete
+it will wirte the file to output.csv
